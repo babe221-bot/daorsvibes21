@@ -34,15 +34,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: '/_fah/image/:path*',
-        destination:
-          '<CLOUD_FUNCTIONS_URL>/:path*',
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/_fah/image/:path*',
+  //       // TODO: Replace with your actual Cloud Functions URL
+  //       destination:
+  //         '<CLOUD_FUNCTIONS_URL>/:path*',
+  //     },
+  //   ];
+  // },
   allowedDevOrigins: ['https://*.google.com', 'https://*.firebaseapp.com'],
 };
 
