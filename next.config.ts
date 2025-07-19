@@ -1,4 +1,4 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -9,14 +9,8 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    loader: 'custom',
+    loaderFile: './loader.js',
   },
   webpack: (config, { isServer, dev }) => {
     if (!isServer && !dev) {
@@ -26,7 +20,30 @@ const nextConfig: NextConfig = {
       };
     }
     return config;
-  }
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store',
+          },
+        ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/_fah/image/:path*',
+        destination:
+          '<CLOUD_FUNCTIONS_URL>/:path*',
+      },
+    ];
+  },
+  allowedDevOrigins: ['https://*.google.com', 'https://*.firebaseapp.com'],
 };
 
 export default nextConfig;
