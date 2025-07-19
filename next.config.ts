@@ -18,6 +18,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer, dev }) => {
+    if (!isServer && !dev) {
+      config.entry = {
+        ...config.entry,
+        'firebase-messaging-sw': './public/firebase-messaging-sw.js',
+      };
+    }
+    return config;
+  }
 };
 
 export default nextConfig;
